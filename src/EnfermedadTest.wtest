@@ -1,0 +1,19 @@
+import Persona.*
+import EnfermedadInfecciosa.*
+
+describe "Enfermedades Test" {
+
+	test "Frank contrae una malaria de 800 células" {
+		const frank = new Persona()
+		const malaria800 = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 800)
+		frank.contraerEnfermedad(malaria800)
+		assert.that(frank.tiene(malaria800))
+	}
+	
+	test "Una malaria de 500 células amenazadas se reproduce" {
+		const malaria500 = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 500)
+		malaria500.reproducite()
+		assert.equals(1000, malaria500.cantidadCelulasAmenazadas())
+	}
+
+}
