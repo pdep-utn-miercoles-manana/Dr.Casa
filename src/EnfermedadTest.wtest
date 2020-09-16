@@ -32,6 +32,7 @@ describe "Tests de Logan viviendo un dia" {
 		
 		logan = new Persona(enfermedades = [malaria500, otitis, lupus], cantidadDeCelulas = 3000000)
 		logan.vivirUnDia()		
+	
 	}
 	
 	test "La cantidad de células afectadas de Logan que estén afectadas por enfermedades agresivas son 0" {
@@ -44,6 +45,35 @@ describe "Tests de Logan viviendo un dia" {
 	
 	test "Logan no esta en coma" {
 		assert.notThat(logan.estaEnComa())
+	}
+	
+}
+
+describe "Tests de Logan viviendo 31 dias" {
+	
+	var malaria500 
+	var otitis
+	var lupus
+	var logan
+	fixture {
+		malaria500 = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 500)
+		otitis = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 100)
+		lupus = new EnfermedadAutoinmune(cantidadCelulasAmenazadas = 10000)
+		
+		logan = new Persona(enfermedades = [malaria500, otitis, lupus], cantidadDeCelulas = 3000000)
+		31.times({_ => logan.vivirUnDia()})
+	}
+	
+	test "La cantidad de células afectadas de Logan que estén afectadas por enfermedades agresivas son 10000 del lupus" {
+		assert.equals(10000, logan.celulasAfectadasPorEnfermedadesAgresivas())
+	}
+	
+	test "La enfermedad de logan que mas celulas afecta es el lupus" {
+		assert.equals(lupus, logan.enfermedadQueMasCelulasAfecta())
+	}
+	
+	test "Logan esta en coma" {
+		assert.that(logan.estaEnComa())
 	}
 	
 }
