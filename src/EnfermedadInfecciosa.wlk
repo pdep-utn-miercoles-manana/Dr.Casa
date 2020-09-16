@@ -18,5 +18,13 @@ class EnfermedadInfecciosa {
 		return unaPersona.cantidadDeCelulas() * 0.1 < cantidadCelulasAmenazadas
 	}
 	
+	method atenuar(unasCelulas) {
+		cantidadCelulasAmenazadas = (cantidadCelulasAmenazadas - unasCelulas).max(0)
+	}
+	
+	method fueCurada() {
+		return cantidadCelulasAmenazadas == 0
+	}
+	
 }
 

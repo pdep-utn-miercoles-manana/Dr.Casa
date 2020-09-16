@@ -1,6 +1,8 @@
 import Persona.*
 import EnfermedadInfecciosa.*
 import EnfermedadAutonimune.*
+import Medico.*
+import JefeDeDepartamento.*
 
 describe "Enfermedades Test" {
 
@@ -15,6 +17,12 @@ describe "Enfermedades Test" {
 		const malaria500 = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 500)
 		malaria500.reproducite()
 		assert.equals(1000, malaria500.cantidadCelulasAmenazadas())
+	}
+	
+	test "Se atenua la malaria en 100" {
+		const unaMalaria = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 1000)
+		unaMalaria.atenuar(100)
+		assert.equals(900, unaMalaria.cantidadCelulasAmenazadas())
 	}
 
 }
@@ -74,6 +82,40 @@ describe "Tests de Logan viviendo 31 dias" {
 	
 	test "Logan esta en coma" {
 		assert.that(logan.estaEnComa())
+	}
+}
+
+describe "Medicos atienden Personas" {
+
+	test "Cameron atiende a Logan" {
+		
+		const malaria500 = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 500)
+		const otitis = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 100)
+		const lupus = new EnfermedadAutoinmune(cantidadCelulasAmenazadas = 10000)
+		
+		const logan = new Persona(enfermedades = [malaria500, otitis, lupus], cantidadDeCelulas = 3000000)
+		
+		const cameron = new Medico(dosis = 10, cantidadDeCelulas = 10000)
+		
+		cameron.atenderA(logan)
+		
+		assert.equals([350, 10000 - 150], logan.enfermedades().map({unaEnfermedad => unaEnfermedad.cantidadCelulasAmenazadas()}))
+	}
+	
+	test "Hacer que House atienda a Cameron" {
+		
+		const malaria1000 = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 1000)
+		
+		const foreman = new Medico(dosis = 4, cantidadDeCelulas = 10000)
+		
+		const cameron = new Medico(dosis = 10, cantidadDeCelulas = 10000, enfermedades = [malaria1000])
+		
+		const house = new JefeDeDepartamento(subordinados = #{foreman})
+		
+		house.atenderA(cameron)
+		
+		assert.equals([940], cameron.enfermedades().map({unaEnfermedad => unaEnfermedad.cantidadCelulasAmenazadas()}))
+		
 	}
 	
 }

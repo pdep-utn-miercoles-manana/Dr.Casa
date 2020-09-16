@@ -14,4 +14,12 @@ class EnfermedadAutoinmune {
 	method esAgresiva(unaPersona) {
 		return vecesQueAfecto > 30
 	}
+	
+	method atenuar(unasCelulas) {
+		cantidadCelulasAmenazadas = (cantidadCelulasAmenazadas - unasCelulas).max(0)
+	}
+	
+	method fueCurada() {
+		return cantidadCelulasAmenazadas == 0
+	}
 }

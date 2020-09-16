@@ -42,4 +42,12 @@ class Persona {
 		return temperatura == 45 || cantidadDeCelulas < 1000000
 	}
 	
+	method serTratada(unaDosis) {
+		enfermedades.forEach({unaEnfermedad => unaEnfermedad.atenuar(unaDosis * 15)})
+		enfermedades.removeAllSuchThat({unaEnfermedad => unaEnfermedad.fueCurada()})
+	}
+	
+	method enfermedades() {
+		return enfermedades
+	}
 }
