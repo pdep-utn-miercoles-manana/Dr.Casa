@@ -4,5 +4,4 @@ class JefeDeDepartamento {
 	method atenderA(unaPersona) {
 		subordinados.anyOne().atenderA(unaPersona)
 	}
-	
 }

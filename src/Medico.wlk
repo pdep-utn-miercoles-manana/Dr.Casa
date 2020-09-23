@@ -7,4 +7,9 @@ class Medico inherits Persona {
 	method atenderA(unaPersona) {
 		unaPersona.serTratada(dosis)
 	}
+	
+	method contraerEnfermedad(unaEnfermedad) {
+		enfermedades.add(unaEnfermedad)
+		self.atenderA(self)	
+	}
 }

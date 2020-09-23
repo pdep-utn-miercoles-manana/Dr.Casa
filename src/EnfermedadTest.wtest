@@ -118,4 +118,13 @@ describe "Medicos atienden Personas" {
 		
 	}
 	
+	test "Cameron contrae malaria" {
+		const malaria1500 = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 1500)
+		const cameron = new Medico(dosis = 10, cantidadDeCelulas = 1000000)
+
+		cameron.contraerEnfermedad(malaria1500)
+
+		assert.equals(1350, malaria1500.cantidadCelulasAmenazadas())
+	}
+
 }
