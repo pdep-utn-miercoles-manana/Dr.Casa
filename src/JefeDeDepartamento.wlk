@@ -1,7 +1,10 @@
-class JefeDeDepartamento {
+import Medico.*
+import Persona.*
+
+class JefeDeDepartamento inherits Medico {
 	const subordinados = #{}
 	
-	method atenderA(unaPersona) {
+	override method atenderA(unaPersona) {
 		subordinados.anyOne().atenderA(unaPersona)
 	}
 }

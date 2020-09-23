@@ -110,7 +110,7 @@ describe "Medicos atienden Personas" {
 		
 		const cameron = new Medico(dosis = 10, cantidadDeCelulas = 10000, enfermedades = [malaria1000])
 		
-		const house = new JefeDeDepartamento(subordinados = #{foreman})
+		const house = new JefeDeDepartamento(subordinados = #{foreman}, cantidadDeCelulas = 3000000)
 		
 		house.atenderA(cameron)
 		
@@ -123,6 +123,16 @@ describe "Medicos atienden Personas" {
 		const cameron = new Medico(dosis = 10, cantidadDeCelulas = 1000000)
 
 		cameron.contraerEnfermedad(malaria1500)
+
+		assert.equals(1350, malaria1500.cantidadCelulasAmenazadas())
+	}
+
+	test "House contrae malaria" {
+		const malaria1500 = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 1500)
+		const cameron = new Medico(dosis = 10, cantidadDeCelulas = 1000000)
+		const house = new JefeDeDepartamento(subordinados = #{cameron}, cantidadDeCelulas = 3000000)
+		
+		house.contraerEnfermedad(malaria1500)
 
 		assert.equals(1350, malaria1500.cantidadCelulasAmenazadas())
 	}

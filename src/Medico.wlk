@@ -2,14 +2,14 @@ import Persona.*
 
 class Medico inherits Persona {
 	
-	const dosis
+	const dosis = 0
 	
 	method atenderA(unaPersona) {
 		unaPersona.serTratada(dosis)
 	}
 	
-	method contraerEnfermedad(unaEnfermedad) {
-		enfermedades.add(unaEnfermedad)
-		self.atenderA(self)	
+	override method contraerEnfermedad(unaEnfermedad) {
+		super(unaEnfermedad)
+		self.atenderA(self)
 	}
 }

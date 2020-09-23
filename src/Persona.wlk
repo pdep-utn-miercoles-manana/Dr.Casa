@@ -5,7 +5,7 @@ class Persona {
 	var cantidadDeCelulas
 	
 	method contraerEnfermedad(unaEnfermedad) {
-		enfermedades.add(unaEnfermedad)	
+		enfermedades.add(unaEnfermedad)
 	}
 	
 	method tiene(unaEnfermedad) {
