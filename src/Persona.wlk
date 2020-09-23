@@ -50,4 +50,8 @@ class Persona {
 	method enfermedades() {
 		return enfermedades
 	}
+	
+	method morirse() {
+		temperatura = 0
+	}
 }
