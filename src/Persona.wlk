@@ -1,6 +1,8 @@
 class Persona {
 	
 	const enfermedades = []
+	const property grupoSanguineo
+	
 	var temperatura = 36
 	var cantidadDeCelulas
 	
@@ -20,7 +22,7 @@ class Persona {
 		temperatura = (temperatura + unosGrados).min(45)
 	}
 	
-	method destruirCelulas(unasCelulas) {
+	method disminuirCelulas(unasCelulas) {
 		cantidadDeCelulas = (cantidadDeCelulas - unasCelulas).max(0)
 	}
 	
@@ -54,4 +56,45 @@ class Persona {
 	method morirse() {
 		temperatura = 0
 	}
+	
+	method donarA(otraPersona, unaCantidadDeCelulasADonar) {
+		if (self.puedeDonar(otraPersona, unaCantidadDeCelulasADonar)) {
+			self.hacerTransfusion(otraPersona, unaCantidadDeCelulasADonar)
+		}
+	}
+	
+	method hacerTransfusion(otraPersona, unaCantidadDeCelulasADonar) {
+		otraPersona.recibirCelulas(unaCantidadDeCelulasADonar)
+		self.disminuirCelulas(unaCantidadDeCelulasADonar)
+	}
+	
+	method recibirCelulas(unaCantidadDeCelulasADonar) {
+		cantidadDeCelulas += unaCantidadDeCelulasADonar
+	}
+	
+	method puedeDonar(otraPersona, unaCantidadDeCelulasADonar) {
+		return self.tieneCelulasSuficientes(unaCantidadDeCelulasADonar) && otraPersona.esCompatibleCon(self)
+	}
+	
+	method tieneCelulasSuficientes(unaCantidadDeCelulasADonar) {
+		return unaCantidadDeCelulasADonar <= cantidadDeCelulas / 4 && unaCantidadDeCelulasADonar > 500
+	}
+	
+	method esCompatibleCon(unDonante) {
+		return self.grupoSanguineo().puedeRecibir(unDonante.grupoSanguineo()) &&
+			   unDonante.grupoSanguineo().puedeDonar(self.grupoSanguineo())
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+

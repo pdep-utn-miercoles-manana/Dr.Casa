@@ -1,13 +1,14 @@
 import Persona.*
 import EnfermedadInfecciosa.*
-import EnfermedadAutonimune.*
+import EnfermedadAutoinmune.*
 import Medico.*
 import JefeDeDepartamento.*
+import GrupoSanguineo.*
 
 describe "Enfermedades Test" {
 
 	test "Frank contrae una malaria de 800 células" {
-		const frank = new Persona(cantidadDeCelulas = 3500000)
+		const frank = new Persona(cantidadDeCelulas = 3500000, grupoSanguineo = factorO)
 		const malaria800 = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 800)
 		frank.contraerEnfermedad(malaria800)
 		assert.that(frank.tiene(malaria800))
@@ -38,7 +39,7 @@ describe "Tests de Logan viviendo un dia" {
 		otitis = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 100)
 		lupus = new EnfermedadAutoinmune(cantidadCelulasAmenazadas = 10000)
 		
-		logan = new Persona(enfermedades = [malaria500, otitis, lupus], cantidadDeCelulas = 3000000)
+		logan = new Persona(enfermedades = [malaria500, otitis, lupus], cantidadDeCelulas = 3000000, grupoSanguineo = factorO)
 		logan.vivirUnDia()		
 	
 	}
@@ -68,7 +69,7 @@ describe "Tests de Logan viviendo 31 dias" {
 		otitis = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 100)
 		lupus = new EnfermedadAutoinmune(cantidadCelulasAmenazadas = 10000)
 		
-		logan = new Persona(enfermedades = [malaria500, otitis, lupus], cantidadDeCelulas = 3000000)
+		logan = new Persona(enfermedades = [malaria500, otitis, lupus], cantidadDeCelulas = 3000000, grupoSanguineo = factorO)
 		31.times({_ => logan.vivirUnDia()})
 	}
 	
@@ -93,9 +94,9 @@ describe "Medicos atienden Personas" {
 		const otitis = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 100)
 		const lupus = new EnfermedadAutoinmune(cantidadCelulasAmenazadas = 10000)
 		
-		const logan = new Persona(enfermedades = [malaria500, otitis, lupus], cantidadDeCelulas = 3000000)
+		const logan = new Persona(enfermedades = [malaria500, otitis, lupus], cantidadDeCelulas = 3000000, grupoSanguineo = factorO)
 		
-		const cameron = new Medico(dosis = 10, cantidadDeCelulas = 10000)
+		const cameron = new Medico(dosis = 10, cantidadDeCelulas = 10000, grupoSanguineo = factorO)
 		
 		cameron.atenderA(logan)
 		
@@ -106,11 +107,11 @@ describe "Medicos atienden Personas" {
 		
 		const malaria1000 = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 1000)
 		
-		const foreman = new Medico(dosis = 4, cantidadDeCelulas = 10000)
+		const foreman = new Medico(dosis = 4, cantidadDeCelulas = 10000, grupoSanguineo = factorO)
 		
-		const cameron = new Medico(dosis = 10, cantidadDeCelulas = 10000, enfermedades = [malaria1000])
+		const cameron = new Medico(dosis = 10, cantidadDeCelulas = 10000, enfermedades = [malaria1000], grupoSanguineo = factorO)
 		
-		const house = new JefeDeDepartamento(subordinados = #{foreman}, cantidadDeCelulas = 3000000)
+		const house = new JefeDeDepartamento(subordinados = #{foreman}, cantidadDeCelulas = 3000000, grupoSanguineo = factorO)
 		
 		house.atenderA(cameron)
 		
@@ -120,7 +121,7 @@ describe "Medicos atienden Personas" {
 	
 	test "Cameron contrae malaria" {
 		const malaria1500 = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 1500)
-		const cameron = new Medico(dosis = 10, cantidadDeCelulas = 1000000)
+		const cameron = new Medico(dosis = 10, cantidadDeCelulas = 1000000, grupoSanguineo = factorO)
 
 		cameron.contraerEnfermedad(malaria1500)
 
@@ -129,8 +130,8 @@ describe "Medicos atienden Personas" {
 
 	test "House contrae malaria" {
 		const malaria1500 = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 1500)
-		const cameron = new Medico(dosis = 10, cantidadDeCelulas = 1000000)
-		const house = new JefeDeDepartamento(subordinados = #{cameron}, cantidadDeCelulas = 3000000)
+		const cameron = new Medico(dosis = 10, cantidadDeCelulas = 1000000, grupoSanguineo = factorO)
+		const house = new JefeDeDepartamento(subordinados = #{cameron}, cantidadDeCelulas = 3000000, grupoSanguineo = factorO)
 		
 		house.contraerEnfermedad(malaria1500)
 
@@ -138,3 +139,42 @@ describe "Medicos atienden Personas" {
 	}
 
 }
+
+
+describe "Donaciones" {
+	
+	test "Cameron no le dona a House 1100 células porque no tiene células suficientes" {
+		const cameron = new Medico(dosis = 10, cantidadDeCelulas = 4000, grupoSanguineo = factorA)
+		const house = new JefeDeDepartamento(subordinados = #{cameron}, cantidadDeCelulas = 3000000, grupoSanguineo = factorO)
+		
+		cameron.donarA(house, 1100)
+		
+		assert.equals(4000, cameron.cantidadDeCelulas())
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

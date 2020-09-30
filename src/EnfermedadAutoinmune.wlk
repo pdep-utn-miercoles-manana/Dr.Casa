@@ -4,7 +4,7 @@ class EnfermedadAutoinmune inherits Enfermedad {
 	var vecesQueAfecto = 0
 	
 	override method afectarA(unaPersona) {
-		unaPersona.destruirCelulas(cantidadCelulasAmenazadas)
+		unaPersona.disminuirCelulas(cantidadCelulasAmenazadas)
 		vecesQueAfecto++
 	}
 	
