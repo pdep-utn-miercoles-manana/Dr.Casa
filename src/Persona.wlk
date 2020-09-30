@@ -58,11 +58,10 @@ class Persona {
 	}
 	
 	method donarA(otraPersona, unaCantidadDeCelulasADonar) {
-		if (self.puedeDonar(otraPersona, unaCantidadDeCelulasADonar)) {
-			self.hacerTransfusion(otraPersona, unaCantidadDeCelulasADonar)
-		}
+		self.validarDonacion(otraPersona, unaCantidadDeCelulasADonar)
+		self.hacerTransfusion(otraPersona, unaCantidadDeCelulasADonar)
 	}
-	
+
 	method hacerTransfusion(otraPersona, unaCantidadDeCelulasADonar) {
 		otraPersona.recibirCelulas(unaCantidadDeCelulasADonar)
 		self.disminuirCelulas(unaCantidadDeCelulasADonar)
@@ -71,9 +70,22 @@ class Persona {
 	method recibirCelulas(unaCantidadDeCelulasADonar) {
 		cantidadDeCelulas += unaCantidadDeCelulasADonar
 	}
+		
+	method validarDonacion(otraPersona, unaCantidadDeCelulasADonar) {
+		self.validarTieneCelulasSuficientes(unaCantidadDeCelulasADonar)
+		self.validarCompatibilidad(otraPersona)
+	}
 	
-	method puedeDonar(otraPersona, unaCantidadDeCelulasADonar) {
-		return self.tieneCelulasSuficientes(unaCantidadDeCelulasADonar) && otraPersona.esCompatibleCon(self)
+	method validarTieneCelulasSuficientes(unaCantidadDeCelulasADonar) {
+		if (! self.tieneCelulasSuficientes(unaCantidadDeCelulasADonar)) {
+			throw new Exception(message = "No se pudo donar por falta de células")
+		}
+	}
+	
+	method validarCompatibilidad(otraPersona) {
+		if (! otraPersona.esCompatibleCon(self)) {
+			throw new Exception(message = "No se pudo donar por incompatibilidad")
+		}
 	}
 	
 	method tieneCelulasSuficientes(unaCantidadDeCelulasADonar) {
@@ -86,14 +98,6 @@ class Persona {
 	}
 	
 }
-
-
-
-
-
-
-
-
 
 
 

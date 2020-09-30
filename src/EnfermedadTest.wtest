@@ -147,9 +147,7 @@ describe "Donaciones" {
 		const cameron = new Medico(dosis = 10, cantidadDeCelulas = 4000, grupoSanguineo = factorA)
 		const house = new JefeDeDepartamento(subordinados = #{cameron}, cantidadDeCelulas = 3000000, grupoSanguineo = factorO)
 		
-		cameron.donarA(house, 1100)
-		
-		assert.equals(4000, cameron.cantidadDeCelulas())
+		assert.throwsExceptionWithMessage("No se pudo donar por falta de células", { cameron.donarA(house, 1100) })
 	}
 	
 }
